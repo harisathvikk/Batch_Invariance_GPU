@@ -1,0 +1,12 @@
+{
+ "cnn1d": {
+  "params": 6132
+ },
+ "cnn2d": {
+  "params": 6132
+ },
+ "tfm1d": {
+  "params": 19876
+ },
+ "cnn_weights_identical_v3_v4": true
+}

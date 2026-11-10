@@ -1,0 +1,88 @@
+ENV {"version": "bi_v3", "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]", "platform": "Linux-6.6.159+-x86_64-with-glibc2.39", "torch": "2.14.1+cu130", "cuda_runtime": "13.0", "cudnn": 92800, "gpu": "Tesla T4", "capability": [7, 5], "driver_and_max_sm_clock": "580.82.07, 1590 MHz", "numpy": "2.4.6", "pandas": "2.2.3", "cpu_count": 2, "quick": false, "stages": ["1", "2", "3"], "weights_source": "embedded", "weights_sha256": "ba7a0a78413f7df3068e22c797087c3ba475271639efbb6ce00b6a84e5282d41", "settings": {"N_SIG": 2048, "B_S1": [2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 127, 128, 129, 255, 256, 512, 1024], "N_L": 262144, "N64": 65536, "B_S2": [1, 2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 128, 256, 512, 1024], "CAPS": {"1": 65536, "2": 131072, "3": 131072, "4": 131072}, "N_RED": 65536, "B_RED": [1, 2, 8, 16, 32, 64, 256, 1024], "SHUF_B": [16, 64, 256, 1024], "N_PAD": 16384, "PAD_M": [64, 256], "PAD_REQ": [1, 2, 4, 8, 16, 32], "SIG_TONE": 2.0, "SIG_GRAT": 1.5, "SEED": 1234}, "cfgs": ["default", "cudnn_bench", "cudnn_det"]}
+
+######## STAGE 1: primitive survey (0.0 min) ########
+
+=== primitive fft1d_L256 (0.0 min) ===
+  fft1d_L256|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+/tmp/ipykernel_3921/1557456218.py:1118: UserWarning: ComplexHalf support is experimental and many operators don't support it yet. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/EmptyTensor.cpp:54.)
+  f = lambda x: torch.view_as_real(torch.fft.rfft(x, dim=-1))
+  fft1d_L256|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft1d_L1024 (0.1 min) ===
+  fft1d_L1024|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft1d_L1024|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft1d_L4096 (0.1 min) ===
+  fft1d_L4096|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft1d_L4096|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft2d_64 (0.1 min) ===
+  fft2d_64|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft2d_64|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft2d_128 (0.1 min) ===
+  fft2d_128|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft2d_128|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive stft_logpow (0.2 min) ===
+  stft_logpow|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  stft_logpow|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fir_conv1d (0.4 min) ===
+  fir_conv1d|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive conv1d_16to32 (0.5 min) ===
+  conv1d_16to32|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive conv2d_8to16 (0.9 min) ===
+  conv2d_8to16|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp16|default: control=1.000  worst rows_bitident vs B=1: 0.0062
+  conv2d_8to16|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 0.0062
+  conv2d_8to16|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 0.0062
+
+=== primitive linear_256to64 (1.2 min) ===
+  linear_256to64|fp32|default: control=1.000  worst rows_bitident vs B=1: 0.0000
+  linear_256to64|fp16|default: control=1.000  worst rows_bitident vs B=1: 0.8724
+
+=== primitive sum_reduce (1.2 min) ===
+  sum_reduce|fp32|default: control=1.000  worst rows_bitident vs B=1: 0.2118
+  sum_reduce|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive softmax (1.2 min) ===
+  softmax|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  softmax|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive layer_norm (1.2 min) ===
+  layer_norm|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  layer_norm|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+######## STAGE 2: models at scale (1.2 min) ########
+
+=== workload cnn1d: generating 262144 test inputs on CPU (1.2 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.8387
+  cnn1d|fp32|default: done in 3.6 min   (total 5.5 min)
+  cnn1d|fp32|cudnn_bench: done in 0.5 min   (total 6.0 min)
+  cnn1d|fp32|cudnn_det: done in 0.5 min   (total 6.6 min)
+  cnn1d|fp16|default: done in 4.1 min   (total 10.6 min)
+  cnn1d|fp16|cudnn_bench: done in 0.6 min   (total 11.2 min)
+  cnn1d|fp16|cudnn_det: done in 0.6 min   (total 11.8 min)
+
+=== workload cnn2d: generating 262144 test inputs on CPU (11.8 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.9464
+  cnn2d|fp32|default: done in 3.7 min   (total 16.3 min)
+  cnn2d|fp32|cudnn_bench: done in 0.6 min   (total 16.9 min)
+  cnn2d|fp32|cudnn_det: done in 0.6 min   (total 17.4 min)
+  cnn2d|fp16|default: done in 4.6 min   (total 22.0 min)
+  cnn2d|fp16|cudnn_bench: done in 0.7 min   (total 22.7 min)

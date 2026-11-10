@@ -1,0 +1,71 @@
+ENV {"version": "bi_v4", "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]", "platform": "Linux-6.18.55+-x86_64-with-glibc2.39", "torch": "2.11.0+cu130", "cuda_runtime": "13.0", "cudnn": 92700, "gpu": "Tesla T4", "capability": [7, 5], "driver_and_max_sm_clock": "580.178.04, 1590 MHz\n580.178.04, 1590 MHz", "numpy": "2.1.3", "pandas": "2.3.3", "cpu_count": 4, "quick": false, "stages": ["2", "3"], "weights_source": "embedded", "weights_sha256": "47bc6970c6cb9cc89d7fd2a269ae3684edc9902174c96cee6b2623dcf73c9c5c", "settings": {"N_SIG": 2048, "B_S1": [2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 127, 128, 129, 255, 256, 512, 1024], "N_L": 262144, "N64": 65536, "B_S2": [1, 2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 128, 256, 512, 1024], "CAPS": {"1": 65536, "2": 131072, "3": 131072, "4": 131072}, "N_RED": 65536, "B_RED": [1, 2, 8, 16, 32, 64, 256, 1024], "SHUF_B": [16, 64, 256, 1024], "N_PAD": 16384, "PAD_M": [64, 256], "PAD_REQ": [1, 2, 4, 8, 16, 32], "SIG_TONE": 2.0, "SIG_GRAT": 1.5, "SEED": 1234}, "cfgs": ["default", "cudnn_bench", "cudnn_det"]}
+
+######## STAGE 2: models at scale (0.1 min) ########
+
+=== workload tfm1d: generating 262144 test inputs on CPU (0.1 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.5856
+  tfm1d|fp32|default: done in 7.4 min   (total 8.5 min)
+  tfm1d|fp32|cudnn_bench: done in 1.1 min   (total 9.6 min)
+  tfm1d|fp32|cudnn_det: done in 1.1 min   (total 10.7 min)
+  tfm1d|fp16|default: done in 7.6 min   (total 18.3 min)
+  tfm1d|fp16|cudnn_bench: done in 1.1 min   (total 19.4 min)
+  tfm1d|fp16|cudnn_det: done in 1.1 min   (total 20.6 min)
+
+=== workload tfm1d_hard: generating 262144 test inputs on CPU (20.6 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.2470
+  tfm1d_hard|fp32|default: done in 7.4 min   (total 28.9 min)
+  tfm1d_hard|fp32|cudnn_bench: done in 1.1 min   (total 30.0 min)
+  tfm1d_hard|fp32|cudnn_det: done in 1.1 min   (total 31.2 min)
+  tfm1d_hard|fp16|default: done in 7.9 min   (total 39.1 min)
+  tfm1d_hard|fp16|cudnn_bench: done in 1.2 min   (total 40.3 min)
+  tfm1d_hard|fp16|cudnn_det: done in 1.2 min   (total 41.5 min)
+
+######## STAGE 3: fixed-size padding (41.5 min) ########
+  tfm1d|fp32 M=64: done (42.7 min)
+  tfm1d|fp32 M=256: done (44.4 min)
+  tfm1d|fp16 M=64: done (45.7 min)
+  tfm1d|fp16 M=256: done (46.8 min)
+STAGE 2 (reference = smallest B)
+                              min_rows_bitident  flips_total  max_flip_rate  max_at_risk  expected_flips_max  bad_selfcheck
+workload   dtype cfg                                                                                                       
+tfm1d      fp16  cudnn_bench           0.171326            7       0.000366           34            4.550580              0
+                 cudnn_det             0.171326            7       0.000366           34            4.550580              0
+                 default               0.170303           63       0.000275          156           18.319963              0
+           fp32  cudnn_bench           0.013000            0       0.000000            0            0.001590              0
+                 cudnn_det             0.013000            0       0.000000            0            0.001590              0
+                 default               0.013138            0       0.000000            0            0.006411              0
+tfm1d_hard fp16  cudnn_bench           0.114197            6       0.000244           48            5.490696              0
+                 cudnn_det             0.114197            6       0.000244           48            5.490696              0
+                 default               0.114761           36       0.000259          192           22.082186              0
+           fp32  cudnn_bench           0.008911            0       0.000000            0            0.001784              0
+                 cudnn_det             0.008911            0       0.000000            0            0.001784              0
+                 default               0.008896            0       0.000000            0            0.007201              0
+
+STAGE 3 padding
+workload dtype   M  B_request     n  padded_rows_bitident_vs_Mbatch  unpadded_rows_bitident_vs_Mbatch  padded_flips_vs_Mbatch  unpadded_flips_vs_Mbatch  rows_per_s_unpadded  rows_per_s_padded
+   tfm1d  fp32  64          1 16384                             1.0                          0.015625                       0                         0           914.354351         829.297228
+   tfm1d  fp32  64          2 16384                             1.0                          0.015625                       0                         0          1621.462713        1659.887912
+   tfm1d  fp32  64          4 16384                             1.0                          0.015503                       0                         0          3506.512397        3385.881482
+   tfm1d  fp32  64          8 16384                             1.0                          0.017334                       0                         0          6723.383007        6471.671540
+   tfm1d  fp32  64         16 16384                             1.0                          0.019165                       0                         0         13068.640652       12728.812673
+   tfm1d  fp32  64         32 16384                             1.0                          0.061523                       0                         0         27940.978047       26493.380554
+   tfm1d  fp32 256          1 16384                             1.0                          0.015625                       0                         0           914.354351         313.955900
+   tfm1d  fp32 256          2 16384                             1.0                          0.015625                       0                         0          1621.462713         642.576502
+   tfm1d  fp32 256          4 16384                             1.0                          0.015503                       0                         0          3506.512397        1257.531866
+   tfm1d  fp32 256          8 16384                             1.0                          0.017334                       0                         0          6723.383007        2503.075136
+   tfm1d  fp32 256         16 16384                             1.0                          0.019165                       0                         0         13068.640652        4998.130416
+   tfm1d  fp32 256         32 16384                             1.0                          0.061523                       0                         0         27940.978047       10030.331738
+   tfm1d  fp16  64          1 16384                             1.0                          0.822205                       0                         1           941.973125         779.916025
+   tfm1d  fp16  64          2 16384                             1.0                          0.822021                       0                         1          1689.238705        1642.184477
+   tfm1d  fp16  64          4 16384                             1.0                          0.670105                       0                         2          3398.639167        3257.362333
+   tfm1d  fp16  64          8 16384                             1.0                          0.171814                       0                         7          6571.814407        6491.087486
+   tfm1d  fp16  64         16 16384                             1.0                          0.700623                       0                         2         13335.348818       12009.248182
+   tfm1d  fp16  64         32 16384                             1.0                          0.738464                       0                         2         27618.251313       26090.379901
+   tfm1d  fp16 256          1 16384                             1.0                          0.999573                       0                         0           941.973125         514.344497
+   tfm1d  fp16 256          2 16384                             1.0                          0.999146                       0                         0          1689.238705        1049.644251
+   tfm1d  fp16 256          4 16384                             1.0                          0.764587                       0                         3          3398.639167        2092.196733
+   tfm1d  fp16 256          8 16384                             1.0                          0.171021                       0                         8          6571.814407        4166.721739
+   tfm1d  fp16 256         16 16384                             1.0                          0.726990                       0                         3         13335.348818        8330.898047
+   tfm1d  fp16 256         32 16384                             1.0                          0.654053                       0                         3         27618.251313       16675.439881
+
+total minutes: 46.8

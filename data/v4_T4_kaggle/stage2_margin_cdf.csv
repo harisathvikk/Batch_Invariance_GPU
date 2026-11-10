@@ -1,0 +1,5 @@
+workload,dtype,cfg,ref_B,n,n_margin_lt_1e-07,n_margin_lt_1e-06,n_margin_lt_1e-05,n_margin_lt_0.0001,n_margin_lt_0.001,n_margin_lt_0.01,n_margin_lt_0.1
+tfm1d,fp32,default,1,65536,0,0,0,9,54,608,5526
+tfm1d,fp16,default,1,65536,19,19,19,19,70,597,5526
+tfm1d_hard,fp32,default,1,65536,0,0,0,5,79,695,6641
+tfm1d_hard,fp16,default,1,65536,25,25,25,25,98,697,6626

@@ -1,0 +1,292 @@
+ENV {"version": "bi_v2", "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]", "platform": "Linux-6.18.55+-x86_64-with-glibc2.39", "torch": "2.11.0+cu130", "cuda_runtime": "13.0", "cudnn": 92700, "gpu": "Tesla T4", "capability": [7, 5], "driver_and_max_sm_clock": "580.178.04, 1590 MHz\n580.178.04, 1590 MHz", "numpy": "2.1.3", "pandas": "2.3.3", "cpu_count": 4, "quick": false, "stages": ["1", "2", "3"], "weights_source": "embedded", "weights_sha256": "ba7a0a78413f7df3068e22c797087c3ba475271639efbb6ce00b6a84e5282d41", "settings": {"N_SIG": 2048, "B_S1": [2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 127, 128, 129, 255, 256, 512, 1024], "N_L": 262144, "N64": 65536, "B_S2": [1, 2, 3, 4, 7, 8, 15, 16, 17, 31, 32, 33, 63, 64, 100, 128, 256, 512, 1024], "CAPS": {"1": 65536, "2": 131072, "3": 131072, "4": 131072}, "N_RED": 65536, "B_RED": [1, 2, 8, 16, 32, 64, 256, 1024], "SHUF_B": [16, 64, 256, 1024], "N_PAD": 16384, "PAD_M": [64, 256], "PAD_REQ": [1, 2, 4, 8, 16, 32], "SIG_TONE": 2.0, "SIG_GRAT": 1.5, "SEED": 1234}, "cfgs": ["default", "cudnn_bench", "cudnn_det"]}
+
+######## STAGE 1: primitive survey (0.1 min) ########
+
+=== primitive fft1d_L256 (0.1 min) ===
+  fft1d_L256|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft1d_L256|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft1d_L1024 (0.1 min) ===
+  fft1d_L1024|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft1d_L1024|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft1d_L4096 (0.1 min) ===
+  fft1d_L4096|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft1d_L4096|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft2d_64 (0.2 min) ===
+  fft2d_64|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft2d_64|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fft2d_128 (0.2 min) ===
+  fft2d_128|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fft2d_128|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive stft_logpow (0.2 min) ===
+  stft_logpow|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  stft_logpow|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive fir_conv1d (0.4 min) ===
+  fir_conv1d|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  fir_conv1d|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive conv1d_16to32 (0.5 min) ===
+  conv1d_16to32|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv1d_16to32|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive conv2d_8to16 (0.8 min) ===
+  conv2d_8to16|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp32|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp32|cudnn_det: control=1.000  worst rows_bitident vs B=1: 1.0000
+  conv2d_8to16|fp16|default: control=1.000  worst rows_bitident vs B=1: 0.0062
+  conv2d_8to16|fp16|cudnn_bench: control=1.000  worst rows_bitident vs B=1: 0.0062
+  conv2d_8to16|fp16|cudnn_det: control=1.000  worst rows_bitident vs B=1: 0.0062
+
+=== primitive linear_256to64 (1.1 min) ===
+  linear_256to64|fp32|default: control=1.000  worst rows_bitident vs B=1: 0.0000
+  linear_256to64|fp16|default: control=1.000  worst rows_bitident vs B=1: 0.8724
+
+=== primitive sum_reduce (1.1 min) ===
+  sum_reduce|fp32|default: control=1.000  worst rows_bitident vs B=1: 0.2118
+  sum_reduce|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive softmax (1.1 min) ===
+  softmax|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  softmax|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+=== primitive layer_norm (1.2 min) ===
+  layer_norm|fp32|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+  layer_norm|fp16|default: control=1.000  worst rows_bitident vs B=1: 1.0000
+
+######## STAGE 2: models at scale (1.2 min) ########
+
+=== workload cnn1d: generating 262144 test inputs on CPU (1.2 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.8387
+  cnn1d|fp32|default: done in 3.5 min   (total 5.2 min)
+  cnn1d|fp32|cudnn_bench: done in 0.5 min   (total 5.7 min)
+  cnn1d|fp32|cudnn_det: done in 0.5 min   (total 6.2 min)
+    !!! SELF-CHECK FAILED: 4647 flips outside the at-risk bound (cnn1d|fp16)
+  cnn1d|fp16|default: done in 3.6 min   (total 9.8 min)
+    !!! SELF-CHECK FAILED: 115 flips outside the at-risk bound (cnn1d|fp16)
+  cnn1d|fp16|cudnn_bench: done in 0.5 min   (total 10.3 min)
+    !!! SELF-CHECK FAILED: 115 flips outside the at-risk bound (cnn1d|fp16)
+  cnn1d|fp16|cudnn_det: done in 0.5 min   (total 10.9 min)
+
+=== workload cnn2d: generating 262144 test inputs on CPU (10.9 min) ===
+  fp64 reference done: accuracy on 65536 rows = 0.9464
+  cnn2d|fp32|default: done in 3.3 min   (total 14.6 min)
+  cnn2d|fp32|cudnn_bench: done in 0.5 min   (total 15.1 min)
+  cnn2d|fp32|cudnn_det: done in 0.5 min   (total 15.6 min)
+    !!! SELF-CHECK FAILED: 1983 flips outside the at-risk bound (cnn2d|fp16)
+  cnn2d|fp16|default: done in 3.9 min   (total 19.6 min)
+    !!! SELF-CHECK FAILED: 66 flips outside the at-risk bound (cnn2d|fp16)
+  cnn2d|fp16|cudnn_bench: done in 0.6 min   (total 20.1 min)
+    !!! SELF-CHECK FAILED: 66 flips outside the at-risk bound (cnn2d|fp16)
+  cnn2d|fp16|cudnn_det: done in 0.6 min   (total 20.7 min)
+
+######## STAGE 3: fixed-size padding (20.7 min) ########
+  cnn1d|fp32 M=64: done (21.3 min)
+  cnn1d|fp32 M=256: done (21.8 min)
+  cnn1d|fp16 M=64: done (22.4 min)
+  cnn1d|fp16 M=256: done (22.8 min)
+  cnn2d|fp32 M=64: done (23.3 min)
+  cnn2d|fp32 M=256: done (23.8 min)
+  cnn2d|fp16 M=64: done (24.5 min)
+  cnn2d|fp16 M=256: done (24.8 min)
+STAGE 1 (vs B=1)
+                                  min_rows_bitident  max_diff_over_scale  min_shuffled_same
+primitive      dtype cfg                                                                   
+conv1d_16to32  fp16  cudnn_bench           1.000000         0.000000e+00                1.0
+                     cudnn_det             1.000000         0.000000e+00                1.0
+                     default               1.000000         0.000000e+00                1.0
+               fp32  cudnn_bench           1.000000         0.000000e+00                1.0
+                     cudnn_det             1.000000         0.000000e+00                1.0
+                     default               1.000000         0.000000e+00                1.0
+conv2d_8to16   fp16  cudnn_bench           0.006202         7.315289e-04                1.0
+                     cudnn_det             0.006202         7.315289e-04                1.0
+                     default               0.006202         7.315289e-04                1.0
+               fp32  cudnn_bench           1.000000         0.000000e+00                1.0
+                     cudnn_det             1.000000         0.000000e+00                1.0
+                     default               1.000000         0.000000e+00                1.0
+fft1d_L1024    fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+fft1d_L256     fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+fft1d_L4096    fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+fft2d_128      fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+fft2d_64       fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+fir_conv1d     fp16  cudnn_bench           1.000000         0.000000e+00                1.0
+                     cudnn_det             1.000000         0.000000e+00                1.0
+                     default               1.000000         0.000000e+00                1.0
+               fp32  cudnn_bench           1.000000         0.000000e+00                1.0
+                     cudnn_det             1.000000         0.000000e+00                1.0
+                     default               1.000000         0.000000e+00                1.0
+layer_norm     fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+linear_256to64 fp16  default               0.872351         5.260389e-04                1.0
+               fp32  default               0.000000         1.605542e-07                1.0
+softmax        fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+stft_logpow    fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               1.000000         0.000000e+00                1.0
+sum_reduce     fp16  default               1.000000         0.000000e+00                1.0
+               fp32  default               0.211806         1.939279e-07                1.0
+
+STAGE 1 regime boundaries (consecutive batch sizes that differ)
+     primitive dtype         cfg  prevB    B
+    fft1d_L256  fp32     default  128.0  129
+    fft1d_L256  fp32     default  129.0  255
+    fft1d_L256  fp16     default  128.0  129
+    fft1d_L256  fp16     default  129.0  255
+   fft1d_L1024  fp32     default  128.0  129
+   fft1d_L1024  fp32     default  129.0  255
+   fft1d_L1024  fp16     default  128.0  129
+   fft1d_L1024  fp16     default  129.0  255
+   fft1d_L4096  fp32     default  128.0  129
+   fft1d_L4096  fp32     default  129.0  255
+   fft1d_L4096  fp16     default  128.0  129
+   fft1d_L4096  fp16     default  129.0  255
+   stft_logpow  fp32     default  128.0  129
+   stft_logpow  fp32     default  129.0  255
+   stft_logpow  fp16     default  128.0  129
+   stft_logpow  fp16     default  129.0  255
+    fir_conv1d  fp32     default  128.0  129
+    fir_conv1d  fp32     default  129.0  255
+    fir_conv1d  fp32 cudnn_bench  128.0  129
+    fir_conv1d  fp32 cudnn_bench  129.0  255
+    fir_conv1d  fp32   cudnn_det  128.0  129
+    fir_conv1d  fp32   cudnn_det  129.0  255
+    fir_conv1d  fp16     default  128.0  129
+    fir_conv1d  fp16     default  129.0  255
+    fir_conv1d  fp16 cudnn_bench  128.0  129
+    fir_conv1d  fp16 cudnn_bench  129.0  255
+    fir_conv1d  fp16   cudnn_det  128.0  129
+    fir_conv1d  fp16   cudnn_det  129.0  255
+ conv1d_16to32  fp32     default  128.0  129
+ conv1d_16to32  fp32     default  129.0  255
+ conv1d_16to32  fp32 cudnn_bench  128.0  129
+ conv1d_16to32  fp32 cudnn_bench  129.0  255
+ conv1d_16to32  fp32   cudnn_det  128.0  129
+ conv1d_16to32  fp32   cudnn_det  129.0  255
+ conv1d_16to32  fp16     default  128.0  129
+ conv1d_16to32  fp16     default  129.0  255
+ conv1d_16to32  fp16 cudnn_bench  128.0  129
+ conv1d_16to32  fp16 cudnn_bench  129.0  255
+ conv1d_16to32  fp16   cudnn_det  128.0  129
+ conv1d_16to32  fp16   cudnn_det  129.0  255
+  conv2d_8to16  fp32     default  128.0  129
+  conv2d_8to16  fp32     default  129.0  255
+  conv2d_8to16  fp32 cudnn_bench  128.0  129
+  conv2d_8to16  fp32 cudnn_bench  129.0  255
+  conv2d_8to16  fp32   cudnn_det  128.0  129
+  conv2d_8to16  fp32   cudnn_det  129.0  255
+  conv2d_8to16  fp16     default   16.0   17
+  conv2d_8to16  fp16     default  128.0  129
+  conv2d_8to16  fp16     default  129.0  255
+  conv2d_8to16  fp16 cudnn_bench   16.0   17
+  conv2d_8to16  fp16 cudnn_bench  128.0  129
+  conv2d_8to16  fp16 cudnn_bench  129.0  255
+  conv2d_8to16  fp16   cudnn_det   16.0   17
+  conv2d_8to16  fp16   cudnn_det  128.0  129
+  conv2d_8to16  fp16   cudnn_det  129.0  255
+linear_256to64  fp32     default   16.0   17
+linear_256to64  fp32     default  128.0  129
+linear_256to64  fp32     default  129.0  255
+linear_256to64  fp16     default  128.0  129
+linear_256to64  fp16     default  129.0  255
+linear_256to64  fp16     default  512.0 1024
+    sum_reduce  fp32     default    3.0    4
+    sum_reduce  fp32     default    7.0    8
+    sum_reduce  fp32     default   15.0   16
+    sum_reduce  fp32     default  128.0  129
+    sum_reduce  fp32     default  129.0  255
+    sum_reduce  fp16     default  128.0  129
+    sum_reduce  fp16     default  129.0  255
+       softmax  fp32     default  128.0  129
+       softmax  fp32     default  129.0  255
+       softmax  fp16     default  128.0  129
+       softmax  fp16     default  129.0  255
+    layer_norm  fp32     default  128.0  129
+    layer_norm  fp32     default  129.0  255
+    layer_norm  fp16     default  128.0  129
+    layer_norm  fp16     default  129.0  255
+
+STAGE 2 (reference = smallest B)
+                            min_rows_bitident  flips_total  max_flip_rate  max_at_risk  expected_flips_max  bad_selfcheck
+workload dtype cfg                                                                                                       
+cnn1d    fp16  cudnn_bench           0.973938            7       0.000061            0            0.035762              7
+               cudnn_det             0.973938            7       0.000061            0            0.035762              7
+               default               0.974197          108       0.000092            0            0.121186            108
+         fp32  cudnn_bench           0.020081            0       0.000000            0            0.000551              0
+               cudnn_det             0.020081            0       0.000000            0            0.000551              0
+               default               0.019623            0       0.000000            0            0.002034              0
+cnn2d    fp16  cudnn_bench           0.992126            0       0.000000            0            0.002599              0
+               cudnn_det             0.992126            0       0.000000            0            0.002599              0
+               default               0.991241           72       0.000061            0            0.010362             72
+         fp32  cudnn_bench           0.005493            0       0.000000            0            0.000227              0
+               cudnn_det             0.005493            0       0.000000            0            0.000227              0
+               default               0.005676            0       0.000000            0            0.000891              0
+
+STAGE 3 padding
+workload dtype   M  B_request     n  padded_rows_bitident_vs_Mbatch  unpadded_rows_bitident_vs_Mbatch  padded_flips_vs_Mbatch  unpadded_flips_vs_Mbatch  rows_per_s_unpadded  rows_per_s_padded
+   cnn1d  fp32  64          1 16384                             1.0                          0.020935                       0                         0          1901.878143        1779.901801
+   cnn1d  fp32  64          2 16384                             1.0                          0.020935                       0                         0          3899.474501        3610.700063
+   cnn1d  fp32  64          4 16384                             1.0                          0.020935                       0                         0          7525.197886        7145.961974
+   cnn1d  fp32  64          8 16384                             1.0                          0.020935                       0                         0         15224.752821       14346.491293
+   cnn1d  fp32  64         16 16384                             1.0                          0.020935                       0                         0         30566.991898       28368.925134
+   cnn1d  fp32  64         32 16384                             1.0                          1.000000                       0                         0         60830.940173       57214.447439
+   cnn1d  fp32 256          1 16384                             1.0                          0.020935                       0                         0          1901.878143        1047.617398
+   cnn1d  fp32 256          2 16384                             1.0                          0.020935                       0                         0          3899.474501        2119.689093
+   cnn1d  fp32 256          4 16384                             1.0                          0.020935                       0                         0          7525.197886        4336.293056
+   cnn1d  fp32 256          8 16384                             1.0                          0.020935                       0                         0         15224.752821        8740.579927
+   cnn1d  fp32 256         16 16384                             1.0                          0.020935                       0                         0         30566.991898       17560.430259
+   cnn1d  fp32 256         32 16384                             1.0                          1.000000                       0                         0         60830.940173       34898.929545
+   cnn1d  fp16  64          1 16384                             1.0                          0.973694                       0                         0          1918.347364        1635.539467
+   cnn1d  fp16  64          2 16384                             1.0                          0.973694                       0                         0          3801.193268        3289.404662
+   cnn1d  fp16  64          4 16384                             1.0                          0.973694                       0                         0          7756.094131        6341.792821
+   cnn1d  fp16  64          8 16384                             1.0                          0.973694                       0                         0         15419.922382       13181.988306
+   cnn1d  fp16  64         16 16384                             1.0                          0.982178                       0                         0         28884.635864       26455.891708
+   cnn1d  fp16  64         32 16384                             1.0                          1.000000                       0                         0         54604.178761       51639.886303
+   cnn1d  fp16 256          1 16384                             1.0                          0.973694                       0                         0          1918.347364        1654.930055
+   cnn1d  fp16 256          2 16384                             1.0                          0.973694                       0                         0          3801.193268        3359.924188
+   cnn1d  fp16 256          4 16384                             1.0                          0.973694                       0                         0          7756.094131        6496.062923
+   cnn1d  fp16 256          8 16384                             1.0                          0.973694                       0                         0         15419.922382       13332.585697
+   cnn1d  fp16 256         16 16384                             1.0                          0.982178                       0                         0         28884.635864       26579.066795
+   cnn1d  fp16 256         32 16384                             1.0                          1.000000                       0                         0         54604.178761       53601.233064
+   cnn2d  fp32  64          1 16384                             1.0                          0.028809                       0                         0          2054.098060        1925.941326
+   cnn2d  fp32  64          2 16384                             1.0                          0.028809                       0                         0          4199.207056        3871.671307
+   cnn2d  fp32  64          4 16384                             1.0                          0.028809                       0                         0          8140.112639        7668.783866
+   cnn2d  fp32  64          8 16384                             1.0                          0.028809                       0                         0         16381.290649       15868.750126
+   cnn2d  fp32  64         16 16384                             1.0                          0.003845                       0                         0         32210.665870       31955.489561
+   cnn2d  fp32  64         32 16384                             1.0                          1.000000                       0                         0         67678.592152       63649.690997
+   cnn2d  fp32 256          1 16384                             1.0                          0.028809                       0                         0          2054.098060        1008.466045
+   cnn2d  fp32 256          2 16384                             1.0                          0.028809                       0                         0          4199.207056        2032.887063
+   cnn2d  fp32 256          4 16384                             1.0                          0.028809                       0                         0          8140.112639        4221.755603
+   cnn2d  fp32 256          8 16384                             1.0                          0.028809                       0                         0         16381.290649        8523.113645
+   cnn2d  fp32 256         16 16384                             1.0                          0.003845                       0                         0         32210.665870       17190.285646
+   cnn2d  fp32 256         32 16384                             1.0                          1.000000                       0                         0         67678.592152       34338.393995
+   cnn2d  fp16  64          1 16384                             1.0                          0.991455                       0                         0          1706.143980        1649.582625
+   cnn2d  fp16  64          2 16384                             1.0                          0.991394                       0                         0          3356.333214        3324.427779
+   cnn2d  fp16  64          4 16384                             1.0                          0.991394                       0                         0          6730.525399        6880.233993
+   cnn2d  fp16  64          8 16384                             1.0                          0.991394                       0                         0         13961.241428       13705.053143
+   cnn2d  fp16  64         16 16384                             1.0                          0.992310                       0                         0         27548.918587       27312.142933
+   cnn2d  fp16  64         32 16384                             1.0                          0.992310                       0                         0         54507.689074       54515.931354
+   cnn2d  fp16 256          1 16384                             1.0                          0.995605                       0                         0          1706.143980        1609.122356
+   cnn2d  fp16 256          2 16384                             1.0                          0.995544                       0                         0          3356.333214        3140.781397
+   cnn2d  fp16 256          4 16384                             1.0                          0.995544                       0                         0          6730.525399        6236.721092
+   cnn2d  fp16 256          8 16384                             1.0                          0.995544                       0                         0         13961.241428       12441.204252
+   cnn2d  fp16 256         16 16384                             1.0                          0.996460                       0                         0         27548.918587       24567.049868
+   cnn2d  fp16 256         32 16384                             1.0                          0.996460                       0                         0         54507.689074       49382.235736
+
+total minutes: 24.8

@@ -1,0 +1,9 @@
+workload,dtype,cfg,ref_B,n,n_margin_lt_1e-07,n_margin_lt_1e-06,n_margin_lt_1e-05,n_margin_lt_0.0001,n_margin_lt_0.001,n_margin_lt_0.01,n_margin_lt_0.1
+cnn1d,fp32,default,1,65536,0,0,0,1,11,112,1247
+cnn1d,fp16,default,1,65536,6,6,6,6,13,133,1240
+cnn2d,fp32,default,1,65536,0,0,0,0,0,33,381
+cnn2d,fp16,default,1,65536,4,4,4,4,4,35,381
+cnn1d_hard,fp32,default,1,65536,0,0,2,8,65,638,6173
+cnn1d_hard,fp16,default,1,65536,54,54,54,54,76,639,6174
+cnn2d_hard,fp32,default,1,65536,0,0,1,4,57,402,4173
+cnn2d_hard,fp16,default,1,65536,44,44,44,44,48,432,4185
